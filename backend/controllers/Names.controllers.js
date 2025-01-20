@@ -1,7 +1,7 @@
 import Name from '../models/Names.js'
 import mongoose from 'mongoose';
 
-export const searchName = async (req, res) => {
+export const getNames = async (req, res) => {
     const { firstname, lastname } = req.body;
 
     if (!firstname || !lastname) {
