@@ -1,30 +1,31 @@
 import Name from '../models/Names.js'
 import mongoose from 'mongoose';
 
-export const getNames = async (req, res) => {
-    const { firstname, lastname } = req.query;
+export const searchName = async (req, res) => {
+    const { firstname, lastname } = req.body;
 
     if (!firstname || !lastname) {
-        return res.status(400).json({ success: false, message: "First and last name are required." });
+        return res.status(400).json({ success: false, message: "Please provide both first and last names." });
     }
 
     try {
-        // Perform a case-insensitive exact match search for both firstname and lastname
+        // Trim whitespace and make the search case-insensitive
         const name = await Name.findOne({
-            firstname: { $regex: `^${firstname}$`, $options: "i" },
-            lastname: { $regex: `^${lastname}$`, $options: "i" },
+            firstname: { $regex: `^${firstname.trim()}$`, $options: "i" },
+            lastname: { $regex: `^${lastname.trim()}$`, $options: "i" },
         });
 
-        if (!name) {
-            return res.status(404).json({ success: false, message: "Name not found." });
+        if (name) {
+            return res.status(200).json({ success: true });
+        } else {
+            return res.status(404).json({ success: false });
         }
-
-        res.status(200).json({ success: true, data: name });
     } catch (error) {
-        console.error("Error in fetching name:", error.message);
-        res.status(500).json({ success: false, message: "Server error" });
+        console.error("Error searching for name:", error.message);
+        res.status(500).json({ success: false, message: "Server error while searching for the name." });
     }
 };
+
 
 export const createName = async (req,res) => {
     const name = req.body; //user will send this data
