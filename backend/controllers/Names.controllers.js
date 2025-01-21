@@ -31,6 +31,9 @@ export const getNames = async (req, res) => {
 export const createName = async (req,res) => {
     const name = req.body; //user will send this data
 
+    name.firstname = name.firstname.trim();
+    name.lastname = name.lastname.trim();
+
     if(!name.firstname || !name.lastname){
         return res.status(400).json({success:false, message: "Please provide first and last name"});
     }
