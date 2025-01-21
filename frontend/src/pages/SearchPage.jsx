@@ -38,12 +38,12 @@ const SearchPage = () => {
                         </Heading>
                         <HStack>
                             <Input
-                                placeholder="First Name"
+                                placeholder="John"
                                 value={query.firstname}
                                 onChange={(e) => setQuery({ ...query, firstname: e.target.value })}
                             />
                             <Input
-                                placeholder="Last Name"
+                                placeholder="Doe"
                                 value={query.lastname}
                                 onChange={(e) => setQuery({ ...query, lastname: e.target.value })}
                             />
