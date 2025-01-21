@@ -31,39 +31,32 @@ export const useNameStore = create((set) => ({
         }
     },
 
-    searchName: async (searchCriteria) => {
-        const trimmedFirstname = searchCriteria.firstname.trim();
-        const trimmedLastname = searchCriteria.lastname.trim();
+    searchName: async (firstname, lastname) => {
+        // Trim whitespace
+        firstname = firstname.trim();
+        lastname = lastname.trim();
     
-        if (!trimmedFirstname || !trimmedLastname) {
+        if (!firstname || !lastname) {
             return { success: false, message: "Please provide both first and last names." };
         }
     
         try {
-            const res = await fetch(`/api/listofnames/search`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    firstname: trimmedFirstname,
-                    lastname: trimmedLastname,
-                }),
+            const res = await fetch(`/api/listofnames?firstname=${firstname}&lastname=${lastname}`, {
+                method: "GET",
             });
     
             if (!res.ok) {
-                throw new Error("Failed to search for the name.");
+                if (res.status === 404) {
+                    throw new Error("Name not found.");
+                }
+                throw new Error("Failed to fetch name.");
             }
     
             const data = await res.json();
-            if (data.success) {
-                return { success: true, message: `${trimmedFirstname} ${trimmedLastname} does suck!` };
-            } else {
-                return { success: false, message: `${trimmedFirstname} ${trimmedLastname} doesn't suck.` };
-            }
+            return { success: true, data: data.data };
         } catch (error) {
-            console.error("Error searching name:", error);
-            return { success: false, message: "An error occurred while searching for the name." };
+            console.error("Error in searchName:", error);
+            return { success: false, message: error.message };
         }
-    },
+    },    
 }));
