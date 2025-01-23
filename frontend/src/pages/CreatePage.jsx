@@ -26,7 +26,7 @@ const CreatePage = () => {
                     Add a man that sucks
                 </Heading>
                 <HStack>
-                    <Field label="First Name">
+                    
                         <Input
                             placeholder="John"
                             name="firstname"
@@ -34,9 +34,7 @@ const CreatePage = () => {
                             onChange={(e) =>
                                 setNewName({ ...newName, firstname: e.target.value })
                             }
-                        />
-                    </Field>
-                    <Field label="Last Name">
+                            />
                         <Input
                             placeholder="Doe"
                             name="lastname"
@@ -45,8 +43,8 @@ const CreatePage = () => {
                                 setNewName({ ...newName, lastname: e.target.value })
                             }
                         />
-                    </Field>
-                    <Button size="sm" type="submit" 
+
+                    <Button size="sm" type="button" 
                     onClick={() => {
                     handleAddName();
                     toaster.create({
