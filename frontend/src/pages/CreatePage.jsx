@@ -46,7 +46,7 @@ const CreatePage = () => {
                             }
                         />
                     </Field>
-                    <Button size="sm" type="submit" mt="4" 
+                    <Button size="sm" type="submit" 
                     onClick={() => {
                     handleAddName();
                     toaster.create({
