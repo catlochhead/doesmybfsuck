@@ -21,7 +21,7 @@ const CreatePage = () => {
 
     return (
         <Flex justifyContent="center" alignItems="center" minH="100vh">
-            <VStack>
+            <VStack spacing = {6}>
                 <Heading as="h1" size="6xl" mb={6}>
                     Add a man that sucks
                 </Heading>
